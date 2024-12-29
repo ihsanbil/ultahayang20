@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ucapan Ulang Tahun Romantis</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #ffafbd, #ffc3a0);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      text-align: center;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 600px; /* Max width to prevent layout overflow on large screens */
+    }
+    .card {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 25px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .message {
+      font-size: 20px;
+      color: #555;
+      margin: 15px 0;
+      min-height: 60px;
+    }
+    .btn button {
+      margin: 15px;
+      font-size: 18px;
+      padding: 12px 20px;
+      border-radius: 15px;
+      background-color: #ff61a6;
+      color: white;
+      border: none;
+      transition: transform 0.3s ease;
+      width: 100%;
+      max-width: 200px; /* Limit button width */
+    }
+    .btn button:hover {
+      transform: scale(1.1);
+    }
+    .hidden {
+      display: none;
+    }
+    .image-container {
+      display: none; /* Initial state: hidden */
+      position: relative;
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+      border-radius: 15px;
+    }
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out forwards;
+      animation-delay: 0.5s;
+    }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    /* Animasi Balon */
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      width: 50px;
+      height: 70px;
+      background: #ff4757;
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+    .balloon::after {
+      content: '';
+      position: absolute;
+      top: 70px;
+      left: 50%;
+      width: 2px;
+      height: 100px;
+      background: #444;
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+    }
+    
+    /* Responsif untuk perangkat kecil */
+    @media (max-width: 768px) {
+      .card {
+        padding: 20px;
+      }
+      .message {
+        font-size: 16px;
+      }
+      .btn button {
+        padding: 10px 15px;
+        font-size: 16px;
+      }
+      .image-container {
+        height: 200px; /* Menyesuaikan ukuran gambar di perangkat kecil */
+      }
+    }
+
+    /* Responsif untuk perangkat lebih kecil (misalnya ponsel) */
+    @media (max-width: 480px) {
+      .message {
+        font-size: 14px;
+      }
+      .btn button {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+      .image-container {
+        height: 180px; /* Menyesuaikan ukuran gambar di perangkat kecil */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Musik -->
+  <audio id="backgroundMusic">
+    <source src="Tiara Andini - Janji Setia.mp3" type="audio/mp3">
+  </audio>
+
+  <div class="container animate__animated animate__fadeIn">
+    <div class="card">
+      <h2 class="mb-4">Selamat Ulang Tahun, Intan! 🎂</h2>
+      <p class="message" id="welcomeMessage">Klik tombol di bawah untuk melihat pesan spesial!</p>
+      
+      <!-- Gambar Slideshow -->
+      <div class="image-container" id="imageContainer">
+        <!-- Gambar-gambar kenangan akan dimasukkan di sini setelah pesan ketiga -->
+      </div>
+      
+      <div class="btn">
+        <button class="btn btn-danger" id="showMessage1">Pesan 1</button>
+        <button class="btn btn-warning hidden" id="showMessage2">Pesan 2</button>
+        <button class="btn btn-success hidden" id="showMessage3">Pesan 3</button>
+        <button class="btn btn-info hidden" id="showMessage4">Pesan Kenangan</button>
+      </div>
+      <p id="specialMessage" class="message hidden animate__animated animate__heartBeat"></p>
+    </div>
+  </div>
+
+  <!-- Animasi Balon -->
+  <script>
+    for (let i = 0; i < 25; i++) {
+      const balloon = document.createElement('div');
+      balloon.className = 'balloon';
+      balloon.style.left = Math.random() * 100 + 'vw';
+      balloon.style.animationDelay = Math.random() * 5 + 's';
+      balloon.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+      document.body.appendChild(balloon);
+    }
+  </script>
+
+  <script>
+    // Pesan Tampilkan
+    document.addEventListener('DOMContentLoaded', function() {
+      const specialMessage = document.getElementById('specialMessage');
+      const btn1 = document.getElementById('showMessage1');
+      const btn2 = document.getElementById('showMessage2');
+      const btn3 = document.getElementById('showMessage3');
+      const btn4 = document.getElementById('showMessage4');
+      const imageContainer = document.getElementById('imageContainer');
+      const backgroundMusic = document.getElementById('backgroundMusic');
+
+      // Tombol Pesan 1
+      btn1.addEventListener('click', () => {
+        specialMessage.textContent = `Selamat ulang tahun, Intan! 🥳 Kamu adalah bintang di hidupku.`;
+        specialMessage.classList.remove('hidden');
+        btn1.classList.add('hidden');
+        btn2.classList.remove('hidden');
+        
+        // Mulai musik setelah tombol pertama diklik
+        backgroundMusic.play();
+      });
+
+      // Tombol Pesan 2
+      btn2.addEventListener('click', () => {
+        specialMessage.textContent = `Aku berharap setiap momen dalam hidupmu penuh kebahagiaan dan cinta ❤️.`;
+        btn2.classList.add('hidden');
+        btn3.classList.remove('hidden');
+      });
+
+      // Tombol Pesan 3
+      btn3.addEventListener('click', () => {
+        specialMessage.textContent = `Terima kasih sudah menjadi bagian dari hidupku, Intan. Selamat ulang tahun! 🎂❤️`;
+        btn3.classList.add('hidden');
+        btn4.classList.remove('hidden');
+      });
+
+      // Tombol Pesan Kenangan (Pesan 4)
+      btn4.addEventListener('click', () => {
+        specialMessage.textContent = `I L O V E YOU, MY BUNNY 💕`;
+        specialMessage.classList.remove('hidden');
+        
+        // Menampilkan gambar-gambar kenangan dengan slideshow
+        const images = [
+          'gambar1.jpg', 'gambar2.jpg', 'gambar3.jpg', 'gambar4.jpg', 'gambar5.jpg',
+          'gambar6.jpg', 'gambar7.jpg', 'gambar8.jpg', 'gambar9.jpg', 'gambar10.jpg',
+          'gambar11.jpg', 'gambar12.jpg', 'gambar13.jpg'
+        ];  // Ganti dengan gambar Anda
+        
+        let currentIndex = 0;
+        const totalImages = images.length;
+        
+        function showNextImage() {
+          // Hapus gambar sebelumnya
+          const currentImage = document.querySelector('.image-container img');
+          if (currentImage) {
+            currentImage.remove();
+          }
+          
+          // Menambahkan gambar baru
+          const imgElement = document.createElement('img');
+          imgElement.src = images[currentIndex];
+          imgElement.alt = `Kenangan ${currentIndex + 1}`;
+          imageContainer.appendChild(imgElement);
+          
+          // Menampilkan gambar berikutnya setelah beberapa detik
+          currentIndex = (currentIndex + 1) % totalImages; // Kembali ke awal setelah gambar terakhir
+        }
+        
+        // Mulai slideshow dengan interval 3 detik
+        const slideshowInterval = setInterval(showNextImage, 3000); // Ganti dengan durasi yang diinginkan
+        
+        // Menampilkan kontainer gambar
+        imageContainer.style.display = 'block';
+        
+        // Tampilkan gambar pertama segera setelah tombol ditekan
+        showNextImage();
+        
+        // Sembunyikan tombol setelah pesan kenangan
+        btn4.classList.add('hidden');
+      });
+    });
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
